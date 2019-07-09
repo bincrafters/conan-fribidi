@@ -1,4 +1,6 @@
 [![Download](https://api.bintray.com/packages/bincrafters/public-conan/fribidi%3Abincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/fribidi%3Abincrafters/_latestVersion)
+[![Build Status Travis](https://travis-ci.com/bincrafters/conan-fribidi.svg?branch=stable%2F1.0.5)](https://travis-ci.com/bincrafters/conan-fribidi)
+[![Build Status AppVeyor](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-fribidi?branch=stable%2F1.0.5&svg=true)](https://ci.appveyor.com/project/bincrafters/conan-fribidi)
 
 ## Conan package recipe for [*fribidi*](https://github.com/fribidi/fribidi)
 
@@ -61,4 +63,4 @@ The following command both runs all the steps of the conan file, and publishes t
 NOTE: The conan recipe license applies only to the files of this recipe, which can be used to build and package fribidi.
 It does *not* in any way apply or is related to the actual software being packaged.
 
-[MIT](https://github.com/feliwir/conan-libfribidi/blob/stable/1.0.5/LICENSE.md)
+[MIT](https://github.com/feliwir/conan-fribidi/blob/stable/1.0.5/LICENSE.md)
