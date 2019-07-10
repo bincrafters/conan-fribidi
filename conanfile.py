@@ -79,4 +79,7 @@ class FribidiConan(ConanFile):
         self._fix_library_names(os.path.join(self.package_folder, "lib"))
 
     def package_info(self):
+        if not self.options.shared:
+            self.cpp_info.defines.append("FRIBIDI_STATIC=1")
+
         self.cpp_info.libs = tools.collect_libs(self)
