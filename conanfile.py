@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from conans import ConanFile, Meson, tools
+import glob
 import os
+import shutil
 
 
 class FribidiConan(ConanFile):
@@ -60,10 +62,21 @@ class FribidiConan(ConanFile):
         meson = self._configure_meson()
         meson.build()
 
+    def _fix_library_names(self, path):
+        # regression in 1.16
+        if self.settings.compiler == "Visual Studio":
+            with tools.chdir(path):
+                for filename_old in glob.glob("*.a"):
+                    filename_new = filename_old[3:-2] + ".lib"
+                    self.output.info("rename %s into %s" % (filename_old, filename_new))
+                    shutil.move(filename_old, filename_new)
+
     def package(self):
         self.copy(pattern="LICENSE", dst="licenses", src=self._source_subfolder)
         meson = self._configure_meson()
         meson.install()
+
+        self._fix_library_names(os.path.join(self.package_folder, "lib"))
 
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
