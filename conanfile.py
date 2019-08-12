@@ -35,10 +35,10 @@ class FribidiConan(ConanFile):
 
 
     def build_requirements(self):
-            if not tools.which("pkg-config"):
-                self.build_requires("pkg-config_installer/0.29.2@bincrafters/stable")
-            if not tools.which("meson"):
-                self.build_requires("meson_installer/0.50.0@bincrafters/stable")
+        if not tools.which("pkg-config"):
+            self.build_requires("pkg-config_installer/0.29.2@bincrafters/stable")
+        if not tools.which("meson"):
+            self.build_requires("meson_installer/0.50.0@bincrafters/stable")
 
     def source(self):
         tools.get("https://github.com/fribidi/fribidi/releases/download/v{0}/fribidi-{0}.tar.bz2".format(self.version), 
@@ -83,3 +83,4 @@ class FribidiConan(ConanFile):
             self.cpp_info.defines.append("FRIBIDI_STATIC=1")
 
         self.cpp_info.libs = tools.collect_libs(self)
+        self.cpp_info.includedirs.append(os.path.join("include", "fribidi"))
