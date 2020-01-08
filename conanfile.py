@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from conans import ConanFile, Meson, tools
 import glob
 import os
@@ -14,7 +12,6 @@ class FribidiConan(ConanFile):
     topics = ("conan", "fribidi", "unicode","bidi","text")
     url = "https://github.com/bincrafters/conan-fribidi"
     homepage = "https://github.com/fribidi/fribidi"
-    author = "Bincrafters <bincrafters@gmail.com>"
     license = "LGPL-2.1"  # Indicates license type of the packaged library; please use SPDX Identifiers https://spdx.org/licenses/
     exports = ["LICENSE.md"]      # Packages the license for the conanfile.py
     # Remove following lines if the target lib does not use cmake.
@@ -38,7 +35,7 @@ class FribidiConan(ConanFile):
         if not tools.which("pkg-config"):
             self.build_requires("pkg-config_installer/0.29.2@bincrafters/stable")
         if not tools.which("meson"):
-            self.build_requires("meson_installer/0.50.0@bincrafters/stable")
+            self.build_requires("meson/0.53.0")
 
     def source(self):
         tools.get("https://github.com/fribidi/fribidi/releases/download/v{0}/fribidi-{0}.tar.bz2".format(self.version), 
