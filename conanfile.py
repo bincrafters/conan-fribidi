@@ -74,7 +74,8 @@ class FribidiConan(ConanFile):
         meson.install()
 
         self._fix_library_names(os.path.join(self.package_folder, "lib"))
-
+        tools.rmdir(os.path.join(self.package_folder, "lib", "pkgconfig"))
+    
     def package_info(self):
         if not self.options.shared:
             self.cpp_info.defines.append("FRIBIDI_STATIC=1")
