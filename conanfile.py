@@ -1,4 +1,5 @@
 from conans import ConanFile, Meson, tools
+from conans.errors import ConanInvalidConfiguration
 import glob
 import os
 import shutil
@@ -29,6 +30,9 @@ class FribidiConan(ConanFile):
     def configure(self):
         del self.settings.compiler.cppstd
         del self.settings.compiler.libcxx
+        if self.options.shared:
+            if self.settings.compiler == "Visual Studio" and "MT" in self.settings.compiler.runtime:
+                raise ConanInvalidConfiguration("fribidi cannot be built as shared library with runtime MT(d)")
 
     def config_options(self):
         if self.settings.os == 'Windows':
