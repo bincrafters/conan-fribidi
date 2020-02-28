@@ -20,7 +20,7 @@ class FribidiConan(ConanFile):
     # Options may need to change depending on the packaged library.
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": False, "fPIC": True}
+    default_options = {"shared": True, "fPIC": True}
 
     # Custom attributes for Bincrafters recipe conventions
     _source_subfolder = "source_subfolder"
@@ -30,11 +30,18 @@ class FribidiConan(ConanFile):
         if self.settings.os == 'Windows':
             del self.options.fPIC
 
+    @property
+    def _meson_required(self):
+        from six import StringIO 
+        mybuf = StringIO()
+        if self.run("meson -v", output=mybuf, ignore_errors=True) != 0:
+            return True
+        return tools.Version(mybuf.getvalue()) < tools.Version('0.53.0')
 
     def build_requirements(self):
         if not tools.which("pkg-config"):
             self.build_requires("pkg-config_installer/0.29.2@bincrafters/stable")
-        if not tools.which("meson"):
+        if self._meson_required:
             self.build_requires("meson/0.53.0")
 
     def source(self):
@@ -74,7 +81,8 @@ class FribidiConan(ConanFile):
         meson.install()
 
         self._fix_library_names(os.path.join(self.package_folder, "lib"))
-
+        tools.rmdir(os.path.join(self.package_folder, "lib", "pkgconfig"))
+    
     def package_info(self):
         if not self.options.shared:
             self.cpp_info.defines.append("FRIBIDI_STATIC=1")
