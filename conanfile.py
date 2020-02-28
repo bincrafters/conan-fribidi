@@ -25,6 +25,10 @@ class FribidiConan(ConanFile):
     # Custom attributes for Bincrafters recipe conventions
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
+    
+    def configure(self):
+        del self.settings.compiler.cppstd
+        del self.settings.compiler.libcxx
 
     def config_options(self):
         if self.settings.os == 'Windows':
